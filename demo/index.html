@@ -32,6 +32,7 @@
       --yellowBookmarkColor: #fffd54;
       --saveButtonColor: #538bc5;
       --deleteButtonColor: #d33630;
+      --bookmarkThumbWidth: 37px;
     }
 
     html {
@@ -80,10 +81,28 @@
       color: 0,
     };
 
+    const bookmarkColors = [{
+      id: 0,
+      className: '',
+    }, {
+      id: 1,
+      className: 'blue',
+    }, {
+      id: 2,
+      className: 'red',
+    }, {
+      id: 3,
+      className: 'green',
+    }, {
+      id: 4,
+      className: 'yellow',
+    }];
+
     const menuSlider = document.createElement('ia-menu-slider');
     const bookmarkEdit = document.createElement('ia-bookmark-edit');
     bookmarkEdit.renderHeader = true;
     bookmarkEdit.bookmark = bookmark;
+    bookmarkEdit.bookmarkColors = bookmarkColors;
 
     const bookmarksMenu = {
       icon: html`
@@ -106,16 +125,16 @@
       });
     });
 
-    document.addEventListener('saveBookmark', ({ detail }) => {
+    bookmarkEdit.addEventListener('saveBookmark', ({ detail }) => {
       console.log(`Bookmark ${detail.bookmark.id} saved`);
       console.table(detail.bookmark);
     });
 
-    document.addEventListener('deleteBookmark', ({ detail }) => {
+    bookmarkEdit.addEventListener('deleteBookmark', ({ detail }) => {
       console.log(`Bookmark ${detail.id} deleted`);
     });
 
-    document.addEventListener('bookmarkColorChanged', ({ detail }) => {
+    bookmarkEdit.addEventListener('bookmarkColorChanged', ({ detail }) => {
       console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
     });
   </script>

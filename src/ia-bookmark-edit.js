@@ -11,6 +11,7 @@ export class IABookmarkEdit extends LitElement {
   static get properties() {
     return {
       bookmark: { type: Object },
+      bookmarkColors: { type: Array },
       renderHeader: { type: Boolean },
     };
   }
@@ -18,30 +19,13 @@ export class IABookmarkEdit extends LitElement {
   constructor() {
     super();
     this.bookmark = {};
-    this.bookmarkColors = [{
-      id: 0,
-      className: '',
-    }, {
-      id: 1,
-      className: 'blue',
-    }, {
-      id: 2,
-      className: 'red',
-    }, {
-      id: 3,
-      className: 'green',
-    }, {
-      id: 4,
-      className: 'yellow',
-    }];
+    this.bookmarkColors = [];
     this.renderHeader = false;
   }
 
   emitSaveEvent(e) {
     e.preventDefault();
     this.dispatchEvent(new CustomEvent('saveBookmark', {
-      bubbles: true,
-      composed: true,
       detail: {
         bookmark: this.bookmark,
       },
@@ -50,8 +34,6 @@ export class IABookmarkEdit extends LitElement {
 
   emitDeleteEvent() {
     this.dispatchEvent(new CustomEvent('deleteBookmark', {
-      bubbles: true,
-      composed: true,
       detail: {
         id: this.bookmark.id,
       },
@@ -60,8 +42,6 @@ export class IABookmarkEdit extends LitElement {
 
   emitColorChangedEvent(colorId) {
     this.dispatchEvent(new CustomEvent('bookmarkColorChanged', {
-      bubbles: true,
-      composed: true,
       detail: {
         bookmarkId: this.bookmark.id,
         colorId,

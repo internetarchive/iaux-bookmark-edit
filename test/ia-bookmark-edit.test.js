@@ -6,8 +6,25 @@ import {
 } from '@open-wc/testing';
 import '../ia-bookmark-edit.js';
 
+const bookmarkColors = [{
+  id: 0,
+  className: '',
+}, {
+  id: 1,
+  className: 'blue',
+}, {
+  id: 2,
+  className: 'red',
+}, {
+  id: 3,
+  className: 'green',
+}, {
+  id: 4,
+  className: 'yellow',
+}];
+
 const container = (bookmark = {}) => (
-  html`<ia-bookmark-edit .bookmark=${bookmark}></ia-bookmark-edit>`
+  html`<ia-bookmark-edit .bookmark=${bookmark} .bookmarkColors=${bookmarkColors}></ia-bookmark-edit>`
 );
 
 const bookmark = {

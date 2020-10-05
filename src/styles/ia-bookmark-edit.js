@@ -3,7 +3,7 @@ import { css } from 'lit-element';
 export default css`
 :host {
   display: block;
-  padding: 0 1rem;
+  padding: 0 1rem 2rem 1rem;
   color: var(--primaryTextColor);
 }
 
@@ -13,7 +13,7 @@ small {
 
 .bookmark {
   display: grid;
-  grid-template-columns: 37px 1fr;
+  grid-template-columns: var(--bookmarkThumbWidth) 1fr;
   grid-gap: 0 1rem;
   align-items: center;
 }
