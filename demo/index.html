@@ -2,28 +2,141 @@
 <html lang="en-US">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmarks List</title>
   <style>
+    @media (prefers-color-scheme: dark) {
+      body {
+        color: #ffffff;
+        background: #181818;
+      }
+    }
+    :root {
+      --menuButtonLabelDisplay: block;
+      --menuSliderBg: #151515;
+      --primaryTextColor: #fff;
+      --menuWidth: 320px;
+      --animationTiming: .25s;
+      --iconFillColor: #fff;
+      --iconStrokeColor: #fff;
+      --iconWidth: 40px;
+      --iconHeight: 40px;
+      --activeButtonBg: #282828;
+      --closeMenuIconWidth: 20px;
+      --closeMenuIconHeight: 20px;
+
+      --defaultBookmarkColor: #282828;
+      --blueBookmarkColor: #0023f5;
+      --redBookmarkColor: #eb3223;
+      --greenBookmarkColor: #75ef4c;
+      --yellowBookmarkColor: #fffd54;
+      --saveButtonColor: #538bc5;
+      --deleteButtonColor: #d33630;
+      --bookmarkThumbWidth: 37px;
+    }
+
+    html {
+      font: normal 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
     body {
-      background: #fafafa;
+      margin: 0;
+    }
+
+    button {
+      height: 2rem;
+      margin: 1rem;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: minmax(auto, calc(100vh - 4rem));
+    }
+
+    #menu {
+      position: relative;
+      width: var(--menuWidth);
     }
   </style>
 </head>
 <body>
-  <div id="demo"></div>
+  <button>Toggle menu</button>
+  <main>
+    <div id="menu"></div>
+  </main>
 
   <script type="module">
-    import { html, render } from 'lit-html';
+    import { render } from 'lit-html';
+    import { html, css, LitElement } from 'lit-element';
     import '../ia-bookmark-edit.js';
+    import '@internetarchive/icon-bookmark/icon-bookmark';
+    import '@internetarchive/ia-menu-slider/ia-menu-slider';
 
-    const title = 'Hello owc World!';
-    render(
-      html`
-        <ia-bookmark-edit .title=${title}>
-          some more light-dom
-        </ia-bookmark-edit>
+    const bookmark = {
+      id: 2,
+      thumbnail: '//placehold.it/37x46/06c/fff',
+      page: 9,
+      note: 'This is a long comment I left about this bookmark in order to test out the display in the panel on the side of the bookreader.',
+      color: 0,
+    };
+
+    const bookmarkColors = [{
+      id: 0,
+      className: '',
+    }, {
+      id: 1,
+      className: 'blue',
+    }, {
+      id: 2,
+      className: 'red',
+    }, {
+      id: 3,
+      className: 'green',
+    }, {
+      id: 4,
+      className: 'yellow',
+    }];
+
+    const menuSlider = document.createElement('ia-menu-slider');
+    const bookmarkEdit = document.createElement('ia-bookmark-edit');
+    bookmarkEdit.renderHeader = true;
+    bookmarkEdit.bookmark = bookmark;
+    bookmarkEdit.bookmarkColors = bookmarkColors;
+
+    const bookmarksMenu = {
+      icon: html`
+        <icon-bookmark style="margin: 15px 0 0 10px"></icon-bookmark>
       `,
-      document.querySelector('#demo')
-    );
+      label: 'Bookmarks',
+      id: 'bookmarks',
+      component: bookmarkEdit,
+    };
+    menuSlider.menus = [bookmarksMenu];
+    menuSlider.open = true;
+    menuSlider.selectedMenu = bookmarksMenu.id;
+
+    document.querySelector('#menu').appendChild(menuSlider);
+
+    menuSlider.updateComplete.then(() => {
+      // Toggle button for menu drawer
+      document.querySelector('button').addEventListener('click', () => {
+        menuSlider.open = !menuSlider.open;
+      });
+    });
+
+    bookmarkEdit.addEventListener('saveBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmark.id} saved`);
+      console.table(detail.bookmark);
+    });
+
+    bookmarkEdit.addEventListener('deleteBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.id} deleted`);
+    });
+
+    bookmarkEdit.addEventListener('bookmarkColorChanged', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
+    });
   </script>
 </body>
 </html>
