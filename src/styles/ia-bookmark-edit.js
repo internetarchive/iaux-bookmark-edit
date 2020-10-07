@@ -18,6 +18,11 @@ small {
   align-items: center;
 }
 
+img {
+  display: block;
+  width: var(--bookmarkThumbWidth);
+}
+
 h4 {
   margin: 0;
   font-size: 1.4rem;
