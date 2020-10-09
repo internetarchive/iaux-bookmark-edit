@@ -88,7 +88,6 @@ export class IABookmarkEdit extends LitElement {
           <p>Comments appear in the bookmarks menu.</p>
           <textarea rows="4" cols="80" name="note" id="note" @change=${this.updateNote}>${this.bookmark.note}</textarea>
           <label for="color">Bookmark color</label>
-          <p>Bookmarks can be grouped by color in the bookmarks menu.</p>
           <ul>
             ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
           </ul>
