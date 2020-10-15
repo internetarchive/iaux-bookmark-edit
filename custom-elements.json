@@ -79,6 +79,10 @@
           "name": "--buttonWidth",
           "description": "Save and delete button widths",
           "type": "Dimension"
+        }, {
+          "name": "--loadingPagePlaceholder",
+          "description": "Background color of page thumbnail",
+          "type": "Color"
         }
       ]
     }

@@ -21,6 +21,8 @@ small {
 img {
   display: block;
   width: var(--bookmarkThumbWidth);
+  min-height: calc(var(--bookmarkThumbWidth) * 1.55);
+  background: var(--loadingPagePlaceholder);
 }
 
 h4 {
