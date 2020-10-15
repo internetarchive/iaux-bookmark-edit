@@ -21,6 +21,8 @@ small {
 img {
   display: block;
   width: var(--bookmarkThumbWidth);
+  min-height: calc(var(--bookmarkThumbWidth) * 1.55);
+  background: var(--loadingPagePlaceholder);
 }
 
 h4 {
@@ -52,12 +54,18 @@ textarea {
   resize: vertical;
 }
 
+.color {
+  width: var(--buttonWidth);
+  margin: 0 auto 2rem auto;
+}
+
 ul {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, auto);
   grid-gap: 0 1rem;
+  justify-content: space-between;
   padding: 1rem 0 0 0;
-  margin: 0 0 2rem 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -67,7 +75,8 @@ li input {
 
 li label {
   display: block;
-  padding-top: .2rem;
+  min-width: 50px;
+  padding-top: .4rem;
   text-align: center;
   border: 1px solid #fff;
   border-radius: 4px;
@@ -91,6 +100,8 @@ button {
   -webkit-appearance: none;
   appearance: none;
   padding: .5rem 1rem;
+  min-width: var(--buttonWidth);
+  box-sizing: border-box;
   font: normal 1.3rem "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: var(--primaryTextColor);
   border: none;
@@ -103,10 +114,6 @@ button {
   text-align: center;
 }
 
-icon-bookmark {
-  --iconFillColor: var(--defaultBookmarkColor);
-}
-
 .blue {
   --iconFillColor: var(--blueBookmarkColor);
 }
@@ -117,9 +124,5 @@ icon-bookmark {
 
 .green {
   --iconFillColor: var(--greenBookmarkColor);
-}
-
-.yellow {
-  --iconFillColor: var(--yellowBookmarkColor);
 }
 `;

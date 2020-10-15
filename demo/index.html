@@ -25,14 +25,14 @@
       --closeMenuIconWidth: 20px;
       --closeMenuIconHeight: 20px;
 
-      --defaultBookmarkColor: #282828;
       --blueBookmarkColor: #0023f5;
       --redBookmarkColor: #eb3223;
       --greenBookmarkColor: #75ef4c;
-      --yellowBookmarkColor: #fffd54;
       --saveButtonColor: #538bc5;
       --deleteButtonColor: #d33630;
+      --loadingPagePlaceholder: #fefdeb;
       --bookmarkThumbWidth: 37px;
+      --buttonWidth: 200px;
     }
 
     html {
@@ -78,24 +78,18 @@
       thumbnail: '//placehold.it/320x496/06c/fff',
       page: 9,
       note: 'This is a long comment I left about this bookmark in order to test out the display in the panel on the side of the bookreader.',
-      color: 0,
+      color: 1,
     };
 
     const bookmarkColors = [{
       id: 0,
-      className: '',
-    }, {
-      id: 1,
       className: 'blue',
     }, {
-      id: 2,
+      id: 1,
       className: 'red',
     }, {
-      id: 3,
+      id: 2,
       className: 'green',
-    }, {
-      id: 4,
-      className: 'yellow',
     }];
 
     const menuSlider = document.createElement('ia-menu-slider');

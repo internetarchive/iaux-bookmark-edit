@@ -56,10 +56,6 @@
       "slots": [],
       "cssProperties": [
         {
-          "name": "--defaultBookmarkColor",
-          "description": "Default bookmark color",
-          "type": "Color"
-        }, {
           "name": "--blueBookmarkColor",
           "description": "Blue bookmark color",
           "type": "Color"
@@ -72,16 +68,20 @@
           "description": "Green bookmark color",
           "type": "Color"
         }, {
-          "name": "--yellowBookmarkColor",
-          "description": "Yellow bookmark color",
-          "type": "Color"
-        }, {
           "name": "--saveButtonColor",
           "description": "Save button color",
           "type": "Color"
         }, {
           "name": "--deleteButtonColor",
           "description": "Delete button color",
+          "type": "Color"
+        }, {
+          "name": "--buttonWidth",
+          "description": "Save and delete button widths",
+          "type": "Dimension"
+        }, {
+          "name": "--loadingPagePlaceholder",
+          "description": "Background color of page thumbnail",
           "type": "Color"
         }
       ]
