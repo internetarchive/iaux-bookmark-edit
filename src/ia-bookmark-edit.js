@@ -85,12 +85,13 @@ export class IABookmarkEdit extends LitElement {
       <form action="" method="put" @submit=${this.emitSaveEvent}>
         <fieldset>
           <label for="note">Note <small>(optional)</small></label>
-          <p>Comments appear in the bookmarks menu.</p>
           <textarea rows="4" cols="80" name="note" id="note" @change=${this.updateNote}>${this.bookmark.note}</textarea>
-          <label for="color">Bookmark color</label>
-          <ul>
-            ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
-          </ul>
+          <div class="color">
+            <label for="color">Bookmark color</label>
+            <ul>
+              ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
+            </ul>
+          </div>
           <div class="justify">
             <input class="button" type="submit" value="Save changes" />
           </div>
