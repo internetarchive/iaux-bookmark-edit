@@ -50,22 +50,18 @@ p {
 textarea {
   width: 100%;
   margin-bottom: 2rem;
+  box-sizing: border-box;
   font: normal 1.4rem "Helvetica Neue", Helvetica, Arial, sans-serif;
   resize: vertical;
-}
-
-.color {
-  width: var(--buttonWidth);
-  margin: 0 auto 2rem auto;
 }
 
 ul {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  grid-gap: 0 1rem;
-  justify-content: space-between;
+  grid-gap: 0 2rem;
+  justify-content: start;
   padding: 1rem 0 0 0;
-  margin: 0;
+  margin: 0 0 2rem 0;
   list-style: none;
 }
 
@@ -100,7 +96,6 @@ button {
   -webkit-appearance: none;
   appearance: none;
   padding: .5rem 1rem;
-  min-width: var(--buttonWidth);
   box-sizing: border-box;
   font: normal 1.3rem "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: var(--primaryTextColor);
@@ -109,9 +104,11 @@ button {
   cursor: pointer;
 }
 
-.justify {
-  margin-bottom: 2rem;
-  text-align: center;
+.actions {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 0 1rem;
+  justify-items: stretch;
 }
 
 .blue {

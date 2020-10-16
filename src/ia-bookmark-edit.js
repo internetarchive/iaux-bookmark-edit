@@ -13,6 +13,7 @@ export class IABookmarkEdit extends LitElement {
       bookmark: { type: Object },
       bookmarkColors: { type: Array },
       renderHeader: { type: Boolean },
+      showBookmark: { type: Boolean },
     };
   }
 
@@ -21,6 +22,7 @@ export class IABookmarkEdit extends LitElement {
     this.bookmark = {};
     this.bookmarkColors = [];
     this.renderHeader = false;
+    this.showBookmark = true;
   }
 
   emitSaveEvent(e) {
@@ -75,31 +77,33 @@ export class IABookmarkEdit extends LitElement {
     `;
   }
 
-  render() {
+  get bookmarkTemplate() {
     return html`
-      ${this.renderHeader ? IABookmarkEdit.headerSection : nothing}
       <div class="bookmark">
         <img src=${this.bookmark.thumbnail} />
         <h4>Page ${this.bookmark.page}</h4>
       </div>
+    `;
+  }
+
+  render() {
+    return html`
+      ${this.renderHeader ? IABookmarkEdit.headerSection : nothing}
+      ${this.showBookmark ? this.bookmarkTemplate : nothing}
       <form action="" method="put" @submit=${this.emitSaveEvent}>
         <fieldset>
           <label for="note">Note <small>(optional)</small></label>
           <textarea rows="4" cols="80" name="note" id="note" @change=${this.updateNote}>${this.bookmark.note}</textarea>
-          <div class="color">
-            <label for="color">Bookmark color</label>
-            <ul>
-              ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
-            </ul>
-          </div>
-          <div class="justify">
+          <label for="color">Bookmark color</label>
+          <ul>
+            ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
+          </ul>
+          <div class="actions">
             <input class="button" type="submit" value="Save changes" />
+            <button class="button" @click=${this.emitDeleteEvent}>Delete bookmark</button>
           </div>
         </fieldset>
       </form>
-      <div class="justify">
-        <button class="button" @click=${this.emitDeleteEvent}>Delete bookmark</button>
-      </div>
     `;
   }
 }

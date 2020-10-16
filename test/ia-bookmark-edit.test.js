@@ -59,6 +59,18 @@ describe('<ia-bookmark-edit>', () => {
     expect(el.shadowRoot.querySelector('header')).to.exist;
   });
 
+  it('toggles rendering of the bookmark thumbnail and page number', async () => {
+    const el = await fixture(container(bookmark));
+    expect(el.shadowRoot.querySelector('img')).to.exist;
+    expect(el.shadowRoot.querySelector('h4')).to.exist;
+
+    el.showBookmark = false;
+    await el.updateComplete;
+
+    expect(el.shadowRoot.querySelector('img')).to.not.exist;
+    expect(el.shadowRoot.querySelector('h4')).to.not.exist;
+  });
+
   it('emits a custom event when the bookmark color is changed', async () => {
     const el = await fixture(container(bookmark));
 

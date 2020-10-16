@@ -12,10 +12,22 @@
           "default": "{}"
         },
         {
+          "name": "bookmarkColors",
+          "type": "Array",
+          "description": "An array of objects used to render bookmark color options",
+          "default": "[]"
+        },
+        {
           "name": "renderHeader",
           "type": "Boolean",
           "description": "A toggle for header rendering",
           "default": "false"
+        },
+        {
+          "name": "showBookmark",
+          "type": "Boolean",
+          "description": "A toggle for rendering the bookmark thumbnail and page number",
+          "default": "true"
         }
       ],
       "events": [{
@@ -75,10 +87,6 @@
           "name": "--deleteButtonColor",
           "description": "Delete button color",
           "type": "Color"
-        }, {
-          "name": "--buttonWidth",
-          "description": "Save and delete button widths",
-          "type": "Dimension"
         }, {
           "name": "--loadingPagePlaceholder",
           "description": "Background color of page thumbnail",
