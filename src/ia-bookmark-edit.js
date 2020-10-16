@@ -100,7 +100,7 @@ export class IABookmarkEdit extends LitElement {
           </ul>
           <div class="actions">
             <input class="button" type="submit" value="Save" />
-            <button class="button" @click=${this.emitDeleteEvent}>Delete</button>
+            <button type="button" class="button" @click=${this.emitDeleteEvent}>Delete</button>
           </div>
         </fieldset>
       </form>
