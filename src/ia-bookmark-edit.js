@@ -99,8 +99,8 @@ export class IABookmarkEdit extends LitElement {
             ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
           </ul>
           <div class="actions">
-            <input class="button" type="submit" value="Save changes" />
-            <button class="button" @click=${this.emitDeleteEvent}>Delete bookmark</button>
+            <input class="button" type="submit" value="Save" />
+            <button class="button" @click=${this.emitDeleteEvent}>Delete</button>
           </div>
         </fieldset>
       </form>
