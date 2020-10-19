@@ -74,14 +74,13 @@ li label {
   min-width: 50px;
   padding-top: .4rem;
   text-align: center;
-  border: 1px solid #fff;
+  border: 1px solid transparent;
   border-radius: 4px;
-  background: #181818;
   cursor: pointer;
 }
 
 li input:checked + label {
-  background: #fff;
+  border-color: #fff;
 }
 
 input[type="submit"] {
