@@ -78,8 +78,16 @@
       id: 2,
       thumbnail: '//placehold.it/320x496/06c/fff',
       page: 9,
+      // note: '',
+      note: 'This is a long comment I left about this bookmark in order to test out the display in the panel on the side of the bookreader.',
+      color: 0,
+    };
+
+    const emptyBookmark = {
+      id: 5,
+      thumbnail: '//placehold.it/320x496/06c/fff',
+      page: 9,
       note: '',
-      // note: 'This is a long comment I left about this bookmark in order to test out the display in the panel on the side of the bookreader.',
       color: 0,
     };
 
@@ -102,13 +110,23 @@
     bookmarkEdit.bookmarkColors = bookmarkColors;
     bookmarkEdit.defaultBookmarkColor = bookmarkColors[0];
 
+    const bookmarkEdit2 = document.createElement('ia-bookmark-edit');
+    bookmarkEdit2.renderHeader = false;
+    bookmarkEdit2.showBookmark = false;
+    bookmarkEdit2.bookmark = emptyBookmark;
+    bookmarkEdit2.bookmarkColors = bookmarkColors;
+    bookmarkEdit2.defaultBookmarkColor = bookmarkColors[0];
+
     const bookmarksMenu = {
       icon: html`
         <icon-bookmark style="margin: 15px 0 0 10px"></icon-bookmark>
       `,
       label: 'Bookmarks',
       id: 'bookmarks',
-      component: bookmarkEdit,
+      component: [
+        bookmarkEdit,
+        bookmarkEdit2,
+      ],
     };
     menuSlider.menus = [bookmarksMenu];
     menuSlider.open = true;
@@ -133,6 +151,19 @@
     });
 
     bookmarkEdit.addEventListener('bookmarkColorChanged', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
+    });
+
+    bookmarkEdit2.addEventListener('saveBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmark.id} saved`);
+      console.table(detail.bookmark);
+    });
+
+    bookmarkEdit2.addEventListener('deleteBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.id} deleted`);
+    });
+
+    bookmarkEdit2.addEventListener('bookmarkColorChanged', ({ detail }) => {
       console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
     });
   </script>
