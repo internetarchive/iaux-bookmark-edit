@@ -25,11 +25,13 @@
       --closeMenuIconWidth: 20px;
       --closeMenuIconHeight: 20px;
 
-      --blueBookmarkColor: #0023f5;
+      --blueBookmarkColor: #428bca;
       --redBookmarkColor: #eb3223;
       --greenBookmarkColor: #75ef4c;
-      --saveButtonColor: #538bc5;
-      --deleteButtonColor: #d33630;
+      --saveButtonColor: #194880;
+      --saveButtonBorderColor: #c5d1df;
+      --deleteButtonColor: #e51c26;
+      --deleteButtonBorderColor: #f8c6c8;
       --loadingPagePlaceholder: #fefdeb;
       --bookmarkThumbWidth: 37px;
     }
@@ -93,7 +95,8 @@
 
     const menuSlider = document.createElement('ia-menu-slider');
     const bookmarkEdit = document.createElement('ia-bookmark-edit');
-    bookmarkEdit.renderHeader = true;
+    bookmarkEdit.renderHeader = false;
+    bookmarkEdit.showBookmark = false;
     bookmarkEdit.bookmark = bookmark;
     bookmarkEdit.bookmarkColors = bookmarkColors;
 
