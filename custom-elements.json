@@ -84,8 +84,18 @@
           "description": "Save button color",
           "type": "Color"
         }, {
+          "name": "--saveButtonBorderColor",
+          "description": "Delete button border color",
+          "type": "Color"
+        }, {
+        }, {
           "name": "--deleteButtonColor",
           "description": "Delete button color",
+          "type": "Color"
+        }, {
+        }, {
+          "name": "--deleteButtonBorderColor",
+          "description": "Delete button border color",
           "type": "Color"
         }, {
           "name": "--loadingPagePlaceholder",

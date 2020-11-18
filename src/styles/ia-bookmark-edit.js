@@ -3,7 +3,6 @@ import { css } from 'lit-element';
 export default css`
 :host {
   display: block;
-  padding: 0 1rem 2rem 1rem;
   color: var(--primaryTextColor);
 }
 
@@ -31,8 +30,8 @@ h4 {
 }
 
 fieldset {
-  padding: 2rem 0 0 0;
   border: none;
+  padding: 0;
 }
 
 label {
@@ -49,19 +48,20 @@ p {
 
 textarea {
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: .5rem;
   box-sizing: border-box;
   font: normal 1.4rem "Helvetica Neue", Helvetica, Arial, sans-serif;
   resize: vertical;
+  padding: 0.5rem;
 }
 
 ul {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  grid-gap: 0 2rem;
+  grid-gap: 0 1rem;
   justify-content: start;
-  padding: 1rem 0 0 0;
-  margin: 0 0 2rem 0;
+  padding: 0;
+  margin: 0 0 .5rem 0;
   list-style: none;
 }
 
@@ -83,17 +83,14 @@ li input:checked + label {
   border-color: #fff;
 }
 
-input[type="submit"] {
-  background: var(--saveButtonColor);
+label[for="note"] {
+  margin-bottom: .5rem;
 }
 
 button {
-  background: var(--deleteButtonColor);
-}
-
-.button {
   -webkit-appearance: none;
   appearance: none;
+  outline: none;
   padding: .5rem 1rem;
   box-sizing: border-box;
   font: normal 1.3rem "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -101,13 +98,19 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  height: 3rem;
+  border: .1rem solid var(--primaryTextColor);
 }
 
-.actions {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 0 1rem;
-  justify-items: stretch;
+.delete-bookmark {
+  background: var(--deleteButtonColor);
+  border: 1px solid var(--deleteButtonBorderColor);
+  margin-right: 1rem;
+}
+
+.save-bookmark {
+  background: var(--saveButtonColor);
+  border: .1rem solid var(--saveButtonBorderColor);
 }
 
 .blue {
@@ -120,5 +123,16 @@ button {
 
 .green {
   --iconFillColor: var(--greenBookmarkColor);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
 }
 `;
