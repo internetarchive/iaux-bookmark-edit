@@ -29,10 +29,12 @@ export class IABookmarkEdit extends LitElement {
     this.disableSave = false;
 
     this.noteStart = '';
+    this.colorStart = '';
   }
 
   firstUpdated() {
     this.noteStart = this.bookmark.note;
+    this.colorStart = this.bookmark.color;
     this.disableSave = this.shouldDisableSave();
   }
 
@@ -76,17 +78,14 @@ export class IABookmarkEdit extends LitElement {
   }
 
   shouldDisableSave(newNote) {
-    const { note, color } = this.bookmark;
-    const isAtDefaultColor = this.defaultBookmarkColor.id === color;
-    const noteWasEmptied = note && !newNote;
+    const startedAtDefaultColor = this.colorStart === this.defaultBookmarkColor.id;
+    if (!startedAtDefaultColor) {
+      return false;
+    }
     if (!this.noteStart && !newNote) {
       return true;
     }
-    if (noteWasEmptied && this.noteStart) {
-      return false;
-    }
-    const shouldDisable = isAtDefaultColor && !newNote;
-    return shouldDisable;
+    return false;
   }
 
   static get headerSection() {
@@ -139,6 +138,7 @@ export class IABookmarkEdit extends LitElement {
           <label for="note">Note</label>
           <textarea
             rows="4" cols="80" name="note" id="note"
+            @change=${this.updateNote}
             @keyup=${this.updateNote}
           >${this.bookmark.note}</textarea>
           <div class="actions">
