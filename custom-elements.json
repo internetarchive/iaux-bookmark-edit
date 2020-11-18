@@ -28,6 +28,12 @@
           "type": "Boolean",
           "description": "A toggle for rendering the bookmark thumbnail and page number",
           "default": "true"
+        },
+        {
+          "name": "disableSave",
+          "type": "Boolean",
+          "description": "A toggle for disabling save action",
+          "default": "false"
         }
       ],
       "events": [{

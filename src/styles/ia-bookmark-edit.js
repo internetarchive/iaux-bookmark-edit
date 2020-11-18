@@ -108,6 +108,13 @@ button {
   margin-right: 1rem;
 }
 
+.save-bookmark:disabled {
+  background: var(--saveButtonColor);
+  border: .1rem solid var(--saveButtonBorderColor);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .save-bookmark {
   background: var(--saveButtonColor);
   border: .1rem solid var(--saveButtonBorderColor);

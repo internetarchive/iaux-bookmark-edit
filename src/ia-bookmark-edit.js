@@ -14,6 +14,7 @@ export class IABookmarkEdit extends LitElement {
       bookmarkColors: { type: Array },
       renderHeader: { type: Boolean },
       showBookmark: { type: Boolean },
+      disableSave: { type: Boolean },
     };
   }
 
@@ -23,6 +24,7 @@ export class IABookmarkEdit extends LitElement {
     this.bookmarkColors = [];
     this.renderHeader = false;
     this.showBookmark = true;
+    this.disableSave = false;
   }
 
   emitSaveEvent(e) {
@@ -86,6 +88,13 @@ export class IABookmarkEdit extends LitElement {
     `;
   }
 
+  get saveButton() {
+    if (this.disableSave) {
+      return html`<button class="save-bookmark" type="submit" value="Save" disabled="disabled">Save</button>`;
+    }
+    return html`<button class="save-bookmark" type="submit" value="Save">Save</button>`;
+  }
+
   render() {
     return html`
       ${this.renderHeader ? IABookmarkEdit.headerSection : nothing}
@@ -100,7 +109,7 @@ export class IABookmarkEdit extends LitElement {
           <textarea rows="4" cols="80" name="note" id="note" @change=${this.updateNote}>${this.bookmark.note}</textarea>
           <div class="actions">
             <button type="button" class="delete-bookmark" @click=${this.emitDeleteEvent}>Delete</button>
-            <button class="save-bookmark" type="submit" value="Save">Save</button>
+            ${this.saveButton}
           </div>
         </fieldset>
       </form>

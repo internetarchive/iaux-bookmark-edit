@@ -130,4 +130,19 @@ describe('<ia-bookmark-edit>', () => {
 
     expect(el.bookmark.note).to.contain(updatedNote);
   });
+
+  it('disables save button when `disableSave` property is toggled', async () => {
+    const el = await fixture(container(bookmark));
+    el.disableSave = true;
+    await el.updateComplete;
+
+    const disabledSave = el.shadowRoot.querySelector('button.save-bookmark');
+    expect(disabledSave.getAttribute('disabled')).to.equal('disabled');
+
+    el.disableSave = false;
+    await el.updateComplete;
+    const enabledSave = el.shadowRoot.querySelector('button.save-bookmark');
+
+    expect(enabledSave.getAttribute('disabled')).to.be.null;
+  });
 });
