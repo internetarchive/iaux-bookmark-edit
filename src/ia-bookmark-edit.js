@@ -12,6 +12,7 @@ export class IABookmarkEdit extends LitElement {
     return {
       bookmark: { type: Object },
       bookmarkColors: { type: Array },
+      defaultBookmarkColor: { type: Object },
       renderHeader: { type: Boolean },
       showBookmark: { type: Boolean },
       disableSave: { type: Boolean },
@@ -22,9 +23,14 @@ export class IABookmarkEdit extends LitElement {
     super();
     this.bookmark = {};
     this.bookmarkColors = [];
+    this.defaultBookmarkColor = {};
     this.renderHeader = false;
     this.showBookmark = true;
     this.disableSave = false;
+  }
+
+  firstUpdated() {
+    this.disableSave = this.shouldDisableSave();
   }
 
   emitSaveEvent(e) {
@@ -60,6 +66,14 @@ export class IABookmarkEdit extends LitElement {
 
   updateNote(e) {
     this.bookmark.note = e.currentTarget.value;
+    this.disableSave = this.shouldDisableSave();
+  }
+
+  shouldDisableSave() {
+    const { note, color } = this.bookmark;
+    const isAtDefaultColor = this.defaultBookmarkColor.id === color;
+    const shouldDisable = isAtDefaultColor && !note;
+    return shouldDisable;
   }
 
   static get headerSection() {
@@ -88,14 +102,18 @@ export class IABookmarkEdit extends LitElement {
     `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  get disabledSaveButton() {
+    return html`<button class="save-bookmark" type="submit" value="Save" disabled="disabled">Save</button>`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   get saveButton() {
-    if (this.disableSave) {
-      return html`<button class="save-bookmark" type="submit" value="Save" disabled="disabled">Save</button>`;
-    }
     return html`<button class="save-bookmark" type="submit" value="Save">Save</button>`;
   }
 
   render() {
+    const saveButton = this.disableSave ? this.disabledSaveButton : this.saveButton;
     return html`
       ${this.renderHeader ? IABookmarkEdit.headerSection : nothing}
       ${this.showBookmark ? this.bookmarkTemplate : nothing}
@@ -106,10 +124,14 @@ export class IABookmarkEdit extends LitElement {
             ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
           </ul>
           <label for="note">Note</label>
-          <textarea rows="4" cols="80" name="note" id="note" @change=${this.updateNote}>${this.bookmark.note}</textarea>
+          <textarea
+            rows="4" cols="80" name="note" id="note"
+            @change=${this.updateNote}
+            @keyup=${this.updateNote}
+          >${this.bookmark.note}</textarea>
           <div class="actions">
             <button type="button" class="delete-bookmark" @click=${this.emitDeleteEvent}>Delete</button>
-            ${this.saveButton}
+            ${saveButton}
           </div>
         </fieldset>
       </form>

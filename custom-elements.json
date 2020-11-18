@@ -18,6 +18,12 @@
           "default": "[]"
         },
         {
+          "name": "defaultBookmarkColor",
+          "type": "Object",
+          "description": "the bookmark color object that is default color",
+          "default": "{}"
+        },
+        {
           "name": "renderHeader",
           "type": "Boolean",
           "description": "A toggle for header rendering",

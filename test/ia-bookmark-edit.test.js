@@ -116,7 +116,12 @@ describe('<ia-bookmark-edit>', () => {
   });
 
   it('updates bookmark note when the note textarea changed', async () => {
+    let ping = 0;
     const el = await fixture(container(bookmark));
+    el.shouldDisableSave = () => {
+      ping += 1;
+    };
+    await el.updateComplete;
     const textarea = el.shadowRoot.querySelector('textarea');
     const updatedNote = 'New note';
 
@@ -125,12 +130,16 @@ describe('<ia-bookmark-edit>', () => {
     setTimeout(() => (
       textarea.dispatchEvent(new Event('change'))
     ));
-
     await oneEvent(textarea, 'change');
-
     expect(el.bookmark.note).to.contain(updatedNote);
-  });
+    expect(ping).to.equal(1);
 
+    setTimeout(() => (
+      textarea.dispatchEvent(new Event('keyup'))
+    ));
+    await oneEvent(textarea, 'keyup');
+    expect(ping).to.equal(2);
+  });
   it('disables save button when `disableSave` property is toggled', async () => {
     const el = await fixture(container(bookmark));
     el.disableSave = true;
