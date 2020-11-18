@@ -27,14 +27,18 @@ export class IABookmarkEdit extends LitElement {
     this.renderHeader = false;
     this.showBookmark = true;
     this.disableSave = false;
+
+    this.noteStart = '';
   }
 
   firstUpdated() {
+    this.noteStart = this.bookmark.note;
     this.disableSave = this.shouldDisableSave();
   }
 
   emitSaveEvent(e) {
     e.preventDefault();
+    this.noteStart = this.bookmark.note;
     this.dispatchEvent(new CustomEvent('saveBookmark', {
       detail: {
         bookmark: this.bookmark,
@@ -61,18 +65,27 @@ export class IABookmarkEdit extends LitElement {
 
   changeColorTo(id) {
     this.bookmark.color = id;
+    this.disableSave = false;
     this.emitColorChangedEvent(id);
   }
 
   updateNote(e) {
-    this.bookmark.note = e.currentTarget.value;
-    this.disableSave = this.shouldDisableSave();
+    const newNote = e.currentTarget.value;
+    this.disableSave = this.shouldDisableSave(newNote);
+    this.bookmark.note = newNote;
   }
 
-  shouldDisableSave() {
+  shouldDisableSave(newNote) {
     const { note, color } = this.bookmark;
     const isAtDefaultColor = this.defaultBookmarkColor.id === color;
-    const shouldDisable = isAtDefaultColor && !note;
+    const noteWasEmptied = note && !newNote;
+    if (!this.noteStart && !newNote) {
+      return true;
+    }
+    if (noteWasEmptied && this.noteStart) {
+      return false;
+    }
+    const shouldDisable = isAtDefaultColor && !newNote;
     return shouldDisable;
   }
 
@@ -126,7 +139,6 @@ export class IABookmarkEdit extends LitElement {
           <label for="note">Note</label>
           <textarea
             rows="4" cols="80" name="note" id="note"
-            @change=${this.updateNote}
             @keyup=${this.updateNote}
           >${this.bookmark.note}</textarea>
           <div class="actions">
