@@ -78,9 +78,16 @@
       id: 2,
       thumbnail: '//placehold.it/320x496/06c/fff',
       page: 9,
-      // note: '',
       note: 'This is a long comment I left about this bookmark in order to test out the display in the panel on the side of the bookreader.',
       color: 0,
+    };
+
+    const bookmarkWithCustomColor = {
+      id: 2,
+      thumbnail: '//placehold.it/320x496/06c/fff',
+      page: 9,
+      note: 'This is a long comment I left about this bookmark in order to test out the display in the panel on the side of the bookreader.',
+      color: 2,
     };
 
     const emptyBookmark = {
@@ -89,6 +96,14 @@
       page: 9,
       note: '',
       color: 0,
+    };
+
+    const emptyBookmarkWithCustomColor = {
+      id: 5,
+      thumbnail: '//placehold.it/320x496/06c/fff',
+      page: 9,
+      note: '',
+      color: 2,
     };
 
     const bookmarkColors = [{
@@ -117,6 +132,20 @@
     bookmarkEdit2.bookmarkColors = bookmarkColors;
     bookmarkEdit2.defaultBookmarkColor = bookmarkColors[0];
 
+    const bookmarkEdit3 = document.createElement('ia-bookmark-edit');
+    bookmarkEdit3.renderHeader = false;
+    bookmarkEdit3.showBookmark = false;
+    bookmarkEdit3.bookmark = emptyBookmarkWithCustomColor;
+    bookmarkEdit3.bookmarkColors = bookmarkColors;
+    bookmarkEdit3.defaultBookmarkColor = bookmarkColors[0];
+
+    const bookmarkEdit4 = document.createElement('ia-bookmark-edit');
+    bookmarkEdit4.renderHeader = false;
+    bookmarkEdit4.showBookmark = false;
+    bookmarkEdit4.bookmark = bookmarkWithCustomColor;
+    bookmarkEdit4.bookmarkColors = bookmarkColors;
+    bookmarkEdit4.defaultBookmarkColor = bookmarkColors[0];
+
     const bookmarksMenu = {
       icon: html`
         <icon-bookmark style="margin: 15px 0 0 10px"></icon-bookmark>
@@ -125,7 +154,9 @@
       id: 'bookmarks',
       component: [
         bookmarkEdit,
+        bookmarkEdit4,
         bookmarkEdit2,
+        bookmarkEdit3,
       ],
     };
     menuSlider.menus = [bookmarksMenu];
@@ -145,11 +176,9 @@
       console.log(`Bookmark ${detail.bookmark.id} saved`);
       console.table(detail.bookmark);
     });
-
     bookmarkEdit.addEventListener('deleteBookmark', ({ detail }) => {
       console.log(`Bookmark ${detail.id} deleted`);
     });
-
     bookmarkEdit.addEventListener('bookmarkColorChanged', ({ detail }) => {
       console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
     });
@@ -158,12 +187,32 @@
       console.log(`Bookmark ${detail.bookmark.id} saved`);
       console.table(detail.bookmark);
     });
-
     bookmarkEdit2.addEventListener('deleteBookmark', ({ detail }) => {
       console.log(`Bookmark ${detail.id} deleted`);
     });
-
     bookmarkEdit2.addEventListener('bookmarkColorChanged', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
+    });
+
+    bookmarkEdit3.addEventListener('saveBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmark.id} saved`);
+      console.table(detail.bookmark);
+    });
+    bookmarkEdit3.addEventListener('deleteBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.id} deleted`);
+    });
+    bookmarkEdit3.addEventListener('bookmarkColorChanged', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
+    });
+
+    bookmarkEdit4.addEventListener('saveBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.bookmark.id} saved`);
+      console.table(detail.bookmark);
+    });
+    bookmarkEdit4.addEventListener('deleteBookmark', ({ detail }) => {
+      console.log(`Bookmark ${detail.id} deleted`);
+    });
+    bookmarkEdit4.addEventListener('bookmarkColorChanged', ({ detail }) => {
       console.log(`Bookmark ${detail.bookmarkId} color changed to ${detail.colorId}`);
     });
   </script>
