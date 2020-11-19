@@ -67,22 +67,21 @@ export class IABookmarkEdit extends LitElement {
 
   changeColorTo(id) {
     this.bookmark.color = id;
-    this.disableSave = false;
+    this.disableSave = this.shouldDisableSave();
     this.emitColorChangedEvent(id);
   }
 
   updateNote(e) {
     const newNote = e.currentTarget.value;
-    this.disableSave = this.shouldDisableSave(newNote);
     this.bookmark.note = newNote;
+    this.disableSave = this.shouldDisableSave();
   }
 
-  shouldDisableSave(newNote) {
-    const startedAtDefaultColor = this.colorStart === this.defaultBookmarkColor.id;
-    if (!startedAtDefaultColor) {
-      return false;
-    }
-    if (!this.noteStart && !newNote) {
+  shouldDisableSave() {
+    const { color, note } = this.bookmark;
+    const colorHasChanged = this.colorStart !== color;
+    const noteHasChanged = this.noteStart !== note;
+    if (!colorHasChanged && !noteHasChanged) {
       return true;
     }
     return false;
