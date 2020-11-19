@@ -12,8 +12,10 @@ export class IABookmarkEdit extends LitElement {
     return {
       bookmark: { type: Object },
       bookmarkColors: { type: Array },
+      defaultBookmarkColor: { type: Object },
       renderHeader: { type: Boolean },
       showBookmark: { type: Boolean },
+      disableSave: { type: Boolean },
     };
   }
 
@@ -21,17 +23,42 @@ export class IABookmarkEdit extends LitElement {
     super();
     this.bookmark = {};
     this.bookmarkColors = [];
+    this.defaultBookmarkColor = {};
     this.renderHeader = false;
     this.showBookmark = true;
+    this.disableSave = false;
+
+    this.noteStart = '';
+    this.colorStart = '';
+
+    this.newNote = '';
+    this.neColor = '';
+  }
+
+  firstUpdated() {
+    this.setDefaultValues(this.bookmark);
+    this.disableSave = this.shouldDisableSave();
+  }
+
+  setDefaultValues() {
+    const { note, color } = this.bookmark;
+    this.noteStart = note;
+    this.colorStart = color;
+    this.newNote = note;
+    this.newColor = color;
   }
 
   emitSaveEvent(e) {
     e.preventDefault();
+    const updatedBookmark = { ...this.bookmark, note: this.newNote, color: this.newColor };
+    this.bookmark = updatedBookmark;
+    this.setDefaultValues();
     this.dispatchEvent(new CustomEvent('saveBookmark', {
       detail: {
-        bookmark: this.bookmark,
+        bookmark: updatedBookmark,
       },
     }));
+    this.disableSave = true;
   }
 
   emitDeleteEvent() {
@@ -52,12 +79,23 @@ export class IABookmarkEdit extends LitElement {
   }
 
   changeColorTo(id) {
-    this.bookmark.color = id;
+    this.newColor = id;
+    this.disableSave = this.shouldDisableSave();
     this.emitColorChangedEvent(id);
   }
 
   updateNote(e) {
-    this.bookmark.note = e.currentTarget.value;
+    this.newNote = e.currentTarget.value;
+    this.disableSave = this.shouldDisableSave();
+  }
+
+  shouldDisableSave() {
+    const colorHasChanged = this.colorStart !== this.newColor;
+    const noteHasChanged = this.noteStart !== this.newNote;
+    if (!colorHasChanged && !noteHasChanged) {
+      return true;
+    }
+    return false;
   }
 
   static get headerSection() {
@@ -86,21 +124,37 @@ export class IABookmarkEdit extends LitElement {
     `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  get disabledSaveButton() {
+    return html`<button class="save-bookmark" type="submit" value="Save" disabled="disabled">Save</button>`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get saveButton() {
+    return html`<button class="save-bookmark" type="submit" value="Save">Save</button>`;
+  }
+
   render() {
+    const saveButton = this.disableSave ? this.disabledSaveButton : this.saveButton;
+    const noteToEdit = this.newNote || this.bookmark.note;
     return html`
       ${this.renderHeader ? IABookmarkEdit.headerSection : nothing}
       ${this.showBookmark ? this.bookmarkTemplate : nothing}
       <form action="" method="put" @submit=${this.emitSaveEvent}>
         <fieldset>
-          <label for="note">Note <small>(optional)</small></label>
-          <textarea rows="4" cols="80" name="note" id="note" @change=${this.updateNote}>${this.bookmark.note}</textarea>
-          <label for="color">Bookmark color</label>
+          <label for="color" class="sr-only">Bookmark color</label>
           <ul>
             ${repeat(this.bookmarkColors, color => color.id, this.bookmarkColor.bind(this))}
           </ul>
+          <label for="note">Note</label>
+          <textarea
+            rows="4" cols="80" name="note" id="note"
+            @change=${this.updateNote}
+            @keyup=${this.updateNote}
+          >${noteToEdit}</textarea>
           <div class="actions">
-            <button type="button" class="button" @click=${this.emitDeleteEvent}>Delete</button>
-            <input class="button" type="submit" value="Save">
+            <button type="button" class="delete-bookmark" @click=${this.emitDeleteEvent}>Delete</button>
+            ${saveButton}
           </div>
         </fieldset>
       </form>
