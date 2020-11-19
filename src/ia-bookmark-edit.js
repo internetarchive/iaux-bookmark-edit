@@ -30,22 +30,35 @@ export class IABookmarkEdit extends LitElement {
 
     this.noteStart = '';
     this.colorStart = '';
+
+    this.newNote = '';
+    this.neColor = '';
   }
 
   firstUpdated() {
-    this.noteStart = this.bookmark.note;
-    this.colorStart = this.bookmark.color;
+    this.setDefaultValues(this.bookmark);
     this.disableSave = this.shouldDisableSave();
+  }
+
+  setDefaultValues() {
+    const { note, color } = this.bookmark;
+    this.noteStart = note;
+    this.colorStart = color;
+    this.newNote = note;
+    this.newColor = color;
   }
 
   emitSaveEvent(e) {
     e.preventDefault();
-    this.noteStart = this.bookmark.note;
+    const updatedBookmark = { ...this.bookmark, note: this.newNote, color: this.newColor };
+    this.bookmark = updatedBookmark;
+    this.setDefaultValues();
     this.dispatchEvent(new CustomEvent('saveBookmark', {
       detail: {
-        bookmark: this.bookmark,
+        bookmark: updatedBookmark,
       },
     }));
+    this.disableSave = true;
   }
 
   emitDeleteEvent() {
@@ -66,21 +79,19 @@ export class IABookmarkEdit extends LitElement {
   }
 
   changeColorTo(id) {
-    this.bookmark.color = id;
+    this.newColor = id;
     this.disableSave = this.shouldDisableSave();
     this.emitColorChangedEvent(id);
   }
 
   updateNote(e) {
-    const newNote = e.currentTarget.value;
-    this.bookmark.note = newNote;
+    this.newNote = e.currentTarget.value;
     this.disableSave = this.shouldDisableSave();
   }
 
   shouldDisableSave() {
-    const { color, note } = this.bookmark;
-    const colorHasChanged = this.colorStart !== color;
-    const noteHasChanged = this.noteStart !== note;
+    const colorHasChanged = this.colorStart !== this.newColor;
+    const noteHasChanged = this.noteStart !== this.newNote;
     if (!colorHasChanged && !noteHasChanged) {
       return true;
     }
@@ -125,6 +136,7 @@ export class IABookmarkEdit extends LitElement {
 
   render() {
     const saveButton = this.disableSave ? this.disabledSaveButton : this.saveButton;
+    const noteToEdit = this.newNote || this.bookmark.note;
     return html`
       ${this.renderHeader ? IABookmarkEdit.headerSection : nothing}
       ${this.showBookmark ? this.bookmarkTemplate : nothing}
@@ -139,7 +151,7 @@ export class IABookmarkEdit extends LitElement {
             rows="4" cols="80" name="note" id="note"
             @change=${this.updateNote}
             @keyup=${this.updateNote}
-          >${this.bookmark.note}</textarea>
+          >${noteToEdit}</textarea>
           <div class="actions">
             <button type="button" class="delete-bookmark" @click=${this.emitDeleteEvent}>Delete</button>
             ${saveButton}
