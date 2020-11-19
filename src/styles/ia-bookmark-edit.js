@@ -83,10 +83,6 @@ li input:checked + label {
   border-color: #fff;
 }
 
-label[for="note"] {
-  margin-bottom: .5rem;
-}
-
 button {
   -webkit-appearance: none;
   appearance: none;
@@ -105,7 +101,7 @@ button {
 .delete-bookmark {
   background: var(--deleteButtonColor);
   border: 1px solid var(--deleteButtonBorderColor);
-  margin-right: 1rem;
+  margin-right: .5em;
 }
 
 .save-bookmark:disabled {
