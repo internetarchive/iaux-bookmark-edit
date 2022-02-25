@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.com/internetarchive/iaux-bookmark-edit.svg?branch=master)](https://travis-ci.com/internetarchive/iaux-bookmark-edit)
 [![codecov](https://codecov.io/gh/internetarchive/iaux-bookmark-edit/branch/master/graph/badge.svg)](https://codecov.io/gh/internetarchive/iaux-bookmark-edit)
 
+# Deprecated.  See [@internetarchive/bookreader](https://github.com/internetarchive/bookreader)
+
 # \<ia-bookmarks-list>
 
 This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
