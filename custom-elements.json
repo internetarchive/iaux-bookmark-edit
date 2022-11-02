@@ -18,6 +18,12 @@
           "default": "[]"
         },
         {
+          "name": "defaultBookmarkColor",
+          "type": "Object",
+          "description": "the bookmark color object that is default color",
+          "default": "{}"
+        },
+        {
           "name": "renderHeader",
           "type": "Boolean",
           "description": "A toggle for header rendering",
@@ -28,6 +34,12 @@
           "type": "Boolean",
           "description": "A toggle for rendering the bookmark thumbnail and page number",
           "default": "true"
+        },
+        {
+          "name": "disableSave",
+          "type": "Boolean",
+          "description": "A toggle for disabling save action",
+          "default": "false"
         }
       ],
       "events": [{
@@ -84,8 +96,18 @@
           "description": "Save button color",
           "type": "Color"
         }, {
+          "name": "--saveButtonBorderColor",
+          "description": "Delete button border color",
+          "type": "Color"
+        }, {
+        }, {
           "name": "--deleteButtonColor",
           "description": "Delete button color",
+          "type": "Color"
+        }, {
+        }, {
+          "name": "--deleteButtonBorderColor",
+          "description": "Delete button border color",
           "type": "Color"
         }, {
           "name": "--loadingPagePlaceholder",
